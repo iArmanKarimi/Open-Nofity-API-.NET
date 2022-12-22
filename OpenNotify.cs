@@ -10,7 +10,6 @@ namespace OpenNotifyAPI
 			URL_PEOPLE = "http://api.open-notify.org/astros.json",
 			URL_ISS_LOCATION = "http://api.open-notify.org/iss-now.json";
 
-		public static async Task<PeopleInSpace> GetPeopleInSpace()
 		/// <summary>
 		/// Gets the current location of ISS (International Space Station)
 		/// <example>
@@ -46,6 +45,27 @@ namespace OpenNotifyAPI
 					.ToInt64(_iss_loc?.Timestamp))
 			};
 		}
+
+		/// <summary>
+		/// Get the current number of people in space. It also returns the names and spacecraft those people are on.
+		/// <example>
+		/// <br/>
+		/// Example:
+		/// <code>
+		/// var people_in_space = await OpenNotify.GetPeopleInSpace();
+		///	Console.WriteLine($"There are {people_in_space?.Number} people in space right now.");
+		///	var people = people_in_space
+		///		?.People
+		///		?.Select(p => $"Craft: {p.Craft}, Name: {p.Name}");
+		///	Console.WriteLine("People who are in space:");
+		///	Console.WriteLine(string.Join("\n", people));
+		/// </code>
+		/// </example>
+		/// </summary>
+		/// <exception cref="HttpRequestException"></exception>"
+		public static async Task<PeopleInSpace?> GetPeopleInSpace() =>
+			await httpClient.GetFromJsonAsync<PeopleInSpace>(URL_PEOPLE);
+
 		public static void Dispose() => httpClient.Dispose();
 	}
 }
