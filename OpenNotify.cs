@@ -8,10 +8,12 @@ namespace OpenNotifyAPI
 		{
 			throw new NotImplementedException();
 		}
+		private static HttpClient httpClient = new HttpClient();
 
 		public static async Task<PeopleInSpace> GetPeopleInSpace()
 		{
 			throw new NotImplementedException();
 		}
+		public static void Dispose() => httpClient.Dispose();
 	}
 }
