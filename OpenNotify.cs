@@ -10,6 +10,9 @@ namespace OpenNotifyAPI
 			throw new NotImplementedException();
 		}
 		private static HttpClient httpClient = new HttpClient();
+		private const string
+			URL_PEOPLE = "http://api.open-notify.org/astros.json",
+			URL_ISS_LOCATION = "http://api.open-notify.org/iss-now.json";
 
 		public static async Task<PeopleInSpace> GetPeopleInSpace()
 		{
