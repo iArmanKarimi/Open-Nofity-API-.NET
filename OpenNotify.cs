@@ -31,7 +31,20 @@ namespace OpenNotifyAPI
 		/// <exception cref="HttpRequestException"></exception>"
 		public static async Task<ISSLocation?> GetISSLocation()
 		{
-			throw new NotImplementedException();
+			var _iss_loc = await httpClient.GetFromJsonAsync<__ISSLocation>(URL_ISS_LOCATION);
+			if (_iss_loc == null) return null;
+			return new ISSLocation
+			{
+				Message = _iss_loc.Message,
+				Location = new Location
+				{
+					Latitude = _iss_loc.ISS_position?.Latitude,
+					Longitude = _iss_loc.ISS_position?.Longitude
+				},
+				DateTime = DateTimeOffset
+					.FromUnixTimeSeconds(Convert
+					.ToInt64(_iss_loc?.Timestamp))
+			};
 		}
 		public static void Dispose() => httpClient.Dispose();
 	}
